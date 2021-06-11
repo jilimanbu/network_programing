@@ -1,0 +1,9 @@
+### UDP通信
+### 问题：客户端无法接收服务器的消息。recvfrom/recv函数返回值为-1
+### 原因： 
+int last = recv(sock_Client, receBuf, strlen(receBuf), 0); 
+int last = recvfrom(sock_Client, receBuf, strlen(receBuf), 0, (SOCKADDR *)&sock, &len);
+读取缓冲区的长度应该设置为整个缓冲区，避免缓冲区内的数据成为脏数据
+### 修改：
+int last = recv(sock_Client, receBuf, BUFFER_SIZE, 0); 
+int last = recvfrom(sock_Client, receBuf, BUFFER_SIZE, 0, (SOCKADDR *)&sock, &len);
